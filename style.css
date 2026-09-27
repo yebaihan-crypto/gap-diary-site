@@ -128,6 +128,14 @@ h1 {
     font-weight: 400;
 }
 
+.download-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
 .download-btn {
     display: inline-flex;
     align-items: center;
