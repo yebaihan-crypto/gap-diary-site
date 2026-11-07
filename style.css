@@ -155,6 +155,37 @@ h1 {
     opacity: 1;
 }
 
+/* Showcase — 15s guided tour, borderless on black */
+.showcase {
+    width: min(1080px, 92vw);
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+.showcase figure {
+    margin: 0;
+    background: var(--bg-color);
+}
+
+.showcase-video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--bg-color);
+    border: 0;
+    outline: none;
+    cursor: zoom-in;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.showcase-video:fullscreen {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    object-fit: contain;
+    cursor: default;
+}
+
 /* Features Grid */
 .features {
     display: grid;
@@ -278,4 +309,9 @@ footer {
     .hero { margin-bottom: 3rem; }
     .features { grid-template-columns: 1fr; }
     main { padding: 2rem 1.5rem; }
+    .showcase {
+        width: calc(100% + 3rem);
+        margin-left: -1.5rem;
+        transform: none;
+    }
 }

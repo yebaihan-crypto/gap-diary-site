@@ -67,6 +67,17 @@
             </div>
         </section>
 
+        <section class="showcase">
+            <figure>
+                <video id="tourVideo" class="showcase-video"
+                       muted playsinline loop preload="none"
+                       poster="media/tour-poster.jpg"
+                       aria-label="Indebox guided tour">
+                    <source src="media/tour-15s.mp4" type="video/mp4">
+                </video>
+            </figure>
+        </section>
+
         <section class="features">
             <div class="feature-card">
                 <h3>
@@ -137,6 +148,67 @@
         if (localStorage.getItem('lang') === 'en' || navigator.language.startsWith('en')) {
             document.body.classList.add('show-en');
         }
+
+        // Guided tour video: fetch only when it comes into view, pause when it leaves
+        (function () {
+            var v = document.getElementById('tourVideo');
+            if (!v) return;
+
+            var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+            function fallback() {
+                v.controls = true;
+                v.preload = 'metadata';
+            }
+
+            if (reduce.matches) fallback();
+
+            if ('IntersectionObserver' in window) {
+                var io = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (!entry.isIntersecting) {
+                            v.pause();
+                            return;
+                        }
+                        if (!v.dataset.loaded) {
+                            v.dataset.loaded = '1';
+                            v.preload = 'auto';
+                        }
+                        if (!reduce.matches) {
+                            var p = v.play();
+                            if (p && p.catch) p.catch(function () {});
+                        }
+                    });
+                }, { threshold: 0.2 });
+                io.observe(v);
+            } else {
+                v.preload = 'metadata';
+            }
+
+            v.addEventListener('click', function () {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                    return;
+                }
+                v.muted = false;
+                v.controls = true;
+                if (v.requestFullscreen) {
+                    v.requestFullscreen().catch(function () {});
+                } else if (v.webkitEnterFullscreen) {
+                    v.webkitEnterFullscreen();
+                }
+            });
+
+            document.addEventListener('fullscreenchange', function () {
+                if (document.fullscreenElement) return;
+                v.muted = true;
+                v.controls = reduce.matches;
+                if (!reduce.matches) {
+                    var p = v.play();
+                    if (p && p.catch) p.catch(function () {});
+                }
+            });
+        })();
     </script>
 </body>
 </html>
