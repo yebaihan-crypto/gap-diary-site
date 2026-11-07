@@ -77,6 +77,7 @@ nav {
     padding: 0.25rem 0.75rem;
     border-radius: 999px;
     font-size: 0.8rem;
+    white-space: nowrap;
     cursor: pointer;
     transition: all 0.2s;
 }
@@ -298,13 +299,18 @@ footer {
 
 /* Utility classes for language switching */
 .lang-en { display: none; }
-.show-en .lang-en { display: block; }
+.show-en .lang-en { display: inline; }
 .show-en .lang-zh { display: none; }
 .show-en .lang-zh-inline { display: none; }
 .show-en .lang-en-inline { display: inline; }
 .lang-en-inline { display: none; }
 
 @media (max-width: 768px) {
+    header { padding: 1.25rem 4%; }
+    .logo { font-size: 1.05rem; }
+    nav { gap: 0.9rem; }
+    .nav-link { font-size: 0.82rem; }
+    .lang-toggle { font-size: 0.72rem; padding: 0.2rem 0.55rem; }
     h1 { font-size: 2.5rem; }
     .hero { margin-bottom: 3rem; }
     .features { grid-template-columns: 1fr; }
